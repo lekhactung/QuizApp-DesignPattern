@@ -1,5 +1,6 @@
 com\mycompany\quizzapp\SecondaryController.class
 com\mycompany\utils\MyAlert.class
 module-info.class
+com\mycompany\quizzapp\QuestionsController.class
 com\mycompany\quizzapp\App.class
 com\mycompany\quizzapp\PrimaryController.class
