@@ -4,6 +4,7 @@
  */
 package com.mycompany.quizzapp;
 
+import com.mycompany.pojo.Category;
 import java.net.URL;
 import java.nio.channels.ConnectionPendingException;
 import java.sql.Connection;
@@ -11,8 +12,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.shape.Arc;
 
 /**
  * FXML Controller class
@@ -20,7 +27,7 @@ import javafx.fxml.Initializable;
  * @author admin
  */
 public class QuestionsController implements Initializable {
-
+    @FXML private ComboBox<Category> cbCates ;
     /**
      * Initializes the controller class.
      */
@@ -34,12 +41,15 @@ public class QuestionsController implements Initializable {
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM category");
             
+            List<Category> cates = new ArrayList<>();
             while(rs.next()){
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                System.out.printf("%d - %s\n",id,name);
+                Category c = new Category(rs.getInt("id"), rs.getString("name"));
+                cates.add(c);
             }
             
+            conn.close();
+            
+            this.cbCates.setItems(FXCollections.observableArrayList(cates));
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
